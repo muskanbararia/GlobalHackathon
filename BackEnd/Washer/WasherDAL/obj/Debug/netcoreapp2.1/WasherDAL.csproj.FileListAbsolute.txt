@@ -1,0 +1,11 @@
+C:\Users\acer\Source\Repos\Washer\WasherDAL\bin\Debug\netcoreapp2.1\WasherDAL.deps.json
+C:\Users\acer\Source\Repos\Washer\WasherDAL\bin\Debug\netcoreapp2.1\WasherDAL.dll
+C:\Users\acer\Source\Repos\Washer\WasherDAL\obj\Debug\netcoreapp2.1\WasherDAL.csprojAssemblyReference.cache
+C:\Users\acer\Source\Repos\Washer\WasherDAL\obj\Debug\netcoreapp2.1\WasherDAL.csproj.CoreCompileInputs.cache
+C:\Users\acer\Source\Repos\Washer\WasherDAL\obj\Debug\netcoreapp2.1\WasherDAL.AssemblyInfoInputs.cache
+C:\Users\acer\Source\Repos\Washer\WasherDAL\obj\Debug\netcoreapp2.1\WasherDAL.AssemblyInfo.cs
+C:\Users\acer\Source\Repos\Washer\WasherDAL\bin\Debug\netcoreapp2.1\WasherDAL.pdb
+C:\Users\acer\Source\Repos\Washer\WasherDAL\obj\Debug\netcoreapp2.1\WasherDAL.dll
+C:\Users\acer\Source\Repos\Washer\WasherDAL\obj\Debug\netcoreapp2.1\WasherDAL.pdb
+C:\Users\acer\Source\Repos\Washer\WasherDAL\bin\Debug\netcoreapp2.1\WasherDAL.runtimeconfig.json
+C:\Users\acer\Source\Repos\Washer\WasherDAL\bin\Debug\netcoreapp2.1\WasherDAL.runtimeconfig.dev.json

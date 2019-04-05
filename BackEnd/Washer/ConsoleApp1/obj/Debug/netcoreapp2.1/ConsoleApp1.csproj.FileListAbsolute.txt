@@ -1,0 +1,14 @@
+C:\Users\acer\Source\Repos\Washer\ConsoleApp1\bin\Debug\netcoreapp2.1\ConsoleApp1.deps.json
+C:\Users\acer\Source\Repos\Washer\ConsoleApp1\bin\Debug\netcoreapp2.1\ConsoleApp1.runtimeconfig.json
+C:\Users\acer\Source\Repos\Washer\ConsoleApp1\bin\Debug\netcoreapp2.1\ConsoleApp1.runtimeconfig.dev.json
+C:\Users\acer\Source\Repos\Washer\ConsoleApp1\bin\Debug\netcoreapp2.1\ConsoleApp1.dll
+C:\Users\acer\Source\Repos\Washer\ConsoleApp1\bin\Debug\netcoreapp2.1\ConsoleApp1.pdb
+C:\Users\acer\Source\Repos\Washer\ConsoleApp1\bin\Debug\netcoreapp2.1\WasherDAL.dll
+C:\Users\acer\Source\Repos\Washer\ConsoleApp1\bin\Debug\netcoreapp2.1\WasherDAL.pdb
+C:\Users\acer\Source\Repos\Washer\ConsoleApp1\obj\Debug\netcoreapp2.1\ConsoleApp1.csprojAssemblyReference.cache
+C:\Users\acer\Source\Repos\Washer\ConsoleApp1\obj\Debug\netcoreapp2.1\ConsoleApp1.csproj.CoreCompileInputs.cache
+C:\Users\acer\Source\Repos\Washer\ConsoleApp1\obj\Debug\netcoreapp2.1\ConsoleApp1.AssemblyInfoInputs.cache
+C:\Users\acer\Source\Repos\Washer\ConsoleApp1\obj\Debug\netcoreapp2.1\ConsoleApp1.AssemblyInfo.cs
+C:\Users\acer\Source\Repos\Washer\ConsoleApp1\obj\Debug\netcoreapp2.1\ConsoleApp1.csproj.CopyComplete
+C:\Users\acer\Source\Repos\Washer\ConsoleApp1\obj\Debug\netcoreapp2.1\ConsoleApp1.dll
+C:\Users\acer\Source\Repos\Washer\ConsoleApp1\obj\Debug\netcoreapp2.1\ConsoleApp1.pdb
