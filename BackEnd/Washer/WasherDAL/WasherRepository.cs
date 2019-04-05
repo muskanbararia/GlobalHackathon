@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Text;
 using WasherDAL.Models;
 using System.Linq;
+using GeoCoordinatePortable;
 
 namespace WasherDAL
 {
@@ -18,6 +19,14 @@ namespace WasherDAL
             conObj.ConnectionString = "Data Source=.\\SQLExpress;Initial Catalog=WasherDB; Integrated Security=SSPI";
             cmdObj = new SqlCommand();
             _context = new WasherDBContext();
+        }
+
+        public static double GetDistance(double sLatitude, double sLongitude, double eLatitude, double eLongitude)
+        {
+            var sCoord = new GeoCoordinate(sLatitude, sLongitude);
+            var eCoord = new GeoCoordinate(eLatitude, eLongitude);
+
+            return sCoord.GetDistanceTo(eCoord);
         }
 
         public string UserSignUp(string userName, string userEmail, string userPassword,string userMobile, string lat, string lon,bool washing)
@@ -118,25 +127,57 @@ namespace WasherDAL
             MatchedRequest matchedRequest;
             try
             {
-                laundryRequests = (from lr in _context.LaundryRequest
-                                   where lr.Status.ToLower() == "Inactive"
-                                   && lr.WashingMachine == false
-                                   select lr).ToList();
+                if(laundryRequest.WashingMachine==true)
+                {
+                    laundryRequests = (from lr in _context.LaundryRequest
+                                       where lr.Status.ToLower() == "Inactive"
+                                       && lr.WashingMachine == false
+                                       select lr).ToList();
+                }
+                else
+                {
+                    laundryRequests = (from lr in _context.LaundryRequest
+                                       where lr.Status.ToLower() == "Inactive"
+                                       && lr.WashingMachine == true
+                                       select lr).ToList();
+                }
+                
                 if(laundryRequests.Any())
                 {
                     foreach (var request in laundryRequests)
                     {
+                        if (request.UserId == laundryRequest.UserId)
+                            continue;
                         if(laundryRequest.WhitesOnly == request.WhitesOnly && 
                             laundryRequest.UnderGarmentsOnly == request.UnderGarmentsOnly &&
                             laundryRequest.GarmentsOnly == request.GarmentsOnly &&
                             laundryRequest.DenimsOrTrousersOnly == request.DenimsOrTrousersOnly)
                         {
                             matchedRequest = new MatchedRequest();
-                            matchedRequest.OwnerId = laundryRequest.UserId;
-                            matchedRequest.WasherId = request.UserId;
-                            matchedRequest.OwnerRequestId = laundryRequest.RequestId;
-                            matchedRequest.WasherRequestId = request.RequestId;
+                            if(laundryRequest.WashingMachine==true)
+                            {
+                                matchedRequest.OwnerId = laundryRequest.UserId;
+                                matchedRequest.WasherId = request.UserId;
+                                matchedRequest.OwnerRequestId = laundryRequest.RequestId;
+                                matchedRequest.WasherRequestId = request.RequestId;
+                            }
+                            else
+                            {
+                                matchedRequest.OwnerId = request.UserId;
+                                matchedRequest.WasherId = laundryRequest.UserId;
+                                matchedRequest.OwnerRequestId = request.RequestId;
+                                matchedRequest.WasherRequestId = laundryRequest.RequestId;
+                            }
+                            
                             matchedRequest.Status = "Accepted";
+                            Users owner = (from lr in _context.Users
+                                                           where lr.Userid == matchedRequest.OwnerId
+                                                           select lr).FirstOrDefault();
+                            Users washer = (from lr in _context.Users
+                                            where lr.Userid == matchedRequest.WasherId
+                                                           select lr).FirstOrDefault();
+                            matchedRequest.Distance = Convert.ToDecimal(GetDistance(Convert.ToDouble(owner.Latitude), Convert.ToDouble(owner.Longitude),
+                                Convert.ToDouble(washer.Latitude), Convert.ToDouble(washer.Longitude)));
                             laundryRequest.Status = "Active";
                             _context.MatchedRequest.Add(matchedRequest);
                             _context.SaveChanges();                            
@@ -156,14 +197,30 @@ namespace WasherDAL
             List<MatchedRequest> matchedRequests = new List<MatchedRequest>();
             try
             {
-                matchedRequests = _context.MatchedRequest.FromSql("Select * from ufn_ViewMatchedRequests(@UserId)").ToList();
                 SqlParameter user = new SqlParameter("@UserId", userId);
+                matchedRequests = _context.MatchedRequest.FromSql("Select * from ufn_ViewMatchedRequests(@UserId)", user).ToList();               
             }
             catch (Exception e)
             {
                 matchedRequests = null;
             }
             return matchedRequests;
+        }
+
+        public LaundryRequest GetUserLaundryInfo(int requestId)
+        {
+            LaundryRequest laundryRequest;
+            try
+            {
+                laundryRequest = (from l in _context.LaundryRequest
+                                  where l.RequestId== requestId
+                                  select l).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                laundryRequest = null;
+            }
+            return laundryRequest;
         }
 
         //Send request
@@ -284,6 +341,7 @@ namespace WasherDAL
                 {
                     newCapacity = ownerRequest.Weight - washerRequest.Weight;
                     ownerRequest.Weight = newCapacity;
+                    _context.SaveChanges();
                     if (newCapacity == 0)
                     {
                         acceptedRequest.Status = "Active";

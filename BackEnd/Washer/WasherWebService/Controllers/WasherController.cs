@@ -86,6 +86,30 @@ namespace WasherWebService.Controllers
             return Json(status);
         }
 
+        [HttpGet]
+        //Lists all the matched request for given user id
+        public JsonResult ViewMatchedRequests(string userId)
+        {
+            List<Models.MatchedRequest> matchedRequests = new List<Models.MatchedRequest>();
+            try
+            {
+                List<MatchedRequest> matched = rep.ViewMatchedRequests(userId);
+                if (matched != null)
+                {
+                    foreach (var match in matched)
+                    {
+                        Models.MatchedRequest matchObj = _mapper.Map<Models.MatchedRequest>(match);
+                        matchedRequests.Add(matchObj);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                matchedRequests = null;
+            }
+            return Json(matchedRequests);
+        }
+
         //Send request
         [HttpPut]
         public JsonResult SendRequest(Models.MatchedRequest matchedRequest)
@@ -124,6 +148,22 @@ namespace WasherWebService.Controllers
                 matchedRequests = null;
             }
             return Json(matchedRequests);
+        }
+
+        [HttpPut]
+        //Accepting request
+        public JsonResult AcceptOrRejectRequest(int matchedRequestId, string newStatus)
+        {
+            bool status = false;
+            try
+            {
+                status = rep.AcceptOrRejectRequest(matchedRequestId, newStatus);
+            }
+            catch (Exception e)
+            {
+                status = false;
+            }
+            return Json(status);
         }
 
         //Update wash status
@@ -174,44 +214,6 @@ namespace WasherWebService.Controllers
             return Json(result);
         }
       
-        [HttpGet]
-        //Lists all the matched request for given user id
-        public JsonResult ViewMatchedRequests(string userId)
-        {
-            List<Models.MatchedRequest> matchedRequests = new List<Models.MatchedRequest>();
-            try
-            {
-                List<MatchedRequest> matched = rep.ViewMatchedRequests(userId);
-                if (matched != null)
-                {
-                    foreach (var match in matched)
-                    {
-                        Models.MatchedRequest matchObj = _mapper.Map<Models.MatchedRequest>(match);
-                        matchedRequests.Add(matchObj);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                matchedRequests = null;
-            }
-            return Json(matchedRequests);
-        }
-
-        [HttpPut]
-        //Accepting request
-        public JsonResult AcceptOrRejectRequest(int matchedRequestId, string newStatus)
-        {
-            bool status = false;
-            try
-            {
-                status = rep.AcceptOrRejectRequest(matchedRequestId, newStatus);
-            }
-            catch (Exception e)
-            {
-                status = false;
-            }
-            return Json(status);
-        }
+      
     }
 }
