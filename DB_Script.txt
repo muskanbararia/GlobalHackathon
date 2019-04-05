@@ -1,4 +1,4 @@
-USE [washer]
+USE [WasherDB]
 GO
 
 /****** Object: Table [dbo].[USERS] Script Date: 28-03-2019 8.29.42 AM ******/
@@ -20,7 +20,7 @@ CREATE TABLE [dbo].[USERS] (
 );
 
 
-USE [washer]
+USE [WasherDB]
 GO
 
 /****** Object: SqlProcedure [dbo].[usp_SignUp] Script Date: 28-03-2019 8.30.16 AM ******/
@@ -63,7 +63,9 @@ BEGIN
  RETURN -99
  END CATCH
 END
-USE [washer]
+GO
+
+USE [WasherDB]
 GO
 
 /****** Object: Scalar Function [dbo].[UFN_LOGIN] Script Date: 28-03-2019 8.30.25 AM ******/
@@ -83,3 +85,4 @@ BEGIN
  SELECT @USER_ID=USERID FROM USERS WHERE USEREMAIL=@UserEmail AND USERPASSWORD=HASHBYTES('SHA2_512',@Password)
  RETURN @USER_ID
 END
+GO

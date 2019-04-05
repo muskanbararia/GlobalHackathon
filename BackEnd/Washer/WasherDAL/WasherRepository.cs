@@ -196,9 +196,7 @@ namespace WasherDAL
                 status = false;
             }
             return status;
-        }
-
-        
+        }     
 
         //View pending requests
         public List<MatchedRequest> ViewPendingRequests(string userId)
@@ -223,16 +221,18 @@ namespace WasherDAL
         public bool AcceptOrRejectRequest(int matchedRequestId, string newStatus)
         {
             bool status = false;
-            MatchedRequest matchedRequests = new MatchedRequest();
+            MatchedRequest matchedRequest = new MatchedRequest();
             try
             {
-                matchedRequests = (from mr in _context.MatchedRequest
+                matchedRequest = (from mr in _context.MatchedRequest
                                    where mr.MatchedRequestId == matchedRequestId
                                    select mr).FirstOrDefault();
-                if (matchedRequests != null)
+                if (matchedRequest != null)
                 {
-                    matchedRequests.Status = newStatus;
+                    matchedRequest.Status = newStatus;
                     //Add to Accepted Request
+                    AcceptedRequest acceptedRequest = new AcceptedRequest();
+                    acceptedRequest.OwnerId = matchedRequest.OwnerId;
 
                     _context.SaveChanges();
                     status = true;
