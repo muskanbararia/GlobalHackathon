@@ -70,6 +70,22 @@ namespace WasherWebService.Controllers
             return Json(u);
         }
 
+        [HttpPost]
+        //Raising a new request
+        public JsonResult RaiseRequest(LaundryRequest laundryRequest)
+        {
+            int status = 0;
+            try
+            {
+                status = rep.RaiseRequest(_mapper.Map<LaundryRequest>(laundryRequest));
+            }
+            catch (Exception ex)
+            {
+                status = 0;
+            }
+            return Json(status);
+        }
+
         //Send request
         [HttpPut]
         public JsonResult SendRequest(Models.MatchedRequest matchedRequest)
@@ -157,23 +173,7 @@ namespace WasherWebService.Controllers
             }
             return Json(result);
         }
-
-        [HttpPost]
-        //Raising a new request
-        public JsonResult RaiseRequest(LaundryRequest laundryRequest)
-        {
-            int status = 0;
-            try
-            {
-                status = rep.RaiseRequest(_mapper.Map<LaundryRequest>(laundryRequest));
-            }
-            catch (Exception ex)
-            {
-                status = 0;
-            }
-            return Json(status);
-        }
-
+      
         [HttpGet]
         //Lists all the matched request for given user id
         public JsonResult ViewMatchedRequests(string userId)

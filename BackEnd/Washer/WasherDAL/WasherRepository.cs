@@ -98,6 +98,7 @@ namespace WasherDAL
             int status = 0;
             try
             {
+                laundryRequest.Status = "Inactive";
                 _context.LaundryRequest.Add(laundryRequest);
                 _context.SaveChanges();
                 MatchRequests(laundryRequest);
@@ -118,7 +119,7 @@ namespace WasherDAL
             try
             {
                 laundryRequests = (from lr in _context.LaundryRequest
-                                   where lr.Status.ToLower() == "active"
+                                   where lr.Status.ToLower() == "Inactive"
                                    && lr.WashingMachine == false
                                    select lr).ToList();
                 if(laundryRequests.Any())
@@ -135,7 +136,8 @@ namespace WasherDAL
                             matchedRequest.WasherId = request.UserId;
                             matchedRequest.OwnerRequestId = laundryRequest.RequestId;
                             matchedRequest.WasherRequestId = request.RequestId;
-                            matchedRequest.Status = "Inactive";
+                            matchedRequest.Status = "Accepted";
+                            laundryRequest.Status = "Active";
                             _context.MatchedRequest.Add(matchedRequest);
                             _context.SaveChanges();                            
                         }
