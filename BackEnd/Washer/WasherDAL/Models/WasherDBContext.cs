@@ -77,7 +77,7 @@ namespace WasherDAL.Models
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.LaundryRequest)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__LaundryRe__UserI__6B24EA82");
+                    .HasConstraintName("FK__LaundryRe__UserI__0E6E26BF");
             });
 
             modelBuilder.Entity<MatchedRequest>(entity =>
@@ -111,25 +111,25 @@ namespace WasherDAL.Models
                     .WithMany(p => p.MatchedRequestOwner)
                     .HasForeignKey(d => d.OwnerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__MatchedRe__Owner__75A278F5");
+                    .HasConstraintName("FK__MatchedRe__Owner__18EBB532");
 
                 entity.HasOne(d => d.OwnerRequest)
                     .WithMany(p => p.MatchedRequestOwnerRequest)
                     .HasForeignKey(d => d.OwnerRequestId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__MatchedRe__Owner__778AC167");
+                    .HasConstraintName("FK__MatchedRe__Owner__1AD3FDA4");
 
                 entity.HasOne(d => d.Washer)
                     .WithMany(p => p.MatchedRequestWasher)
                     .HasForeignKey(d => d.WasherId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__MatchedRe__Washe__76969D2E");
+                    .HasConstraintName("FK__MatchedRe__Washe__19DFD96B");
 
                 entity.HasOne(d => d.WasherRequest)
                     .WithMany(p => p.MatchedRequestWasherRequest)
                     .HasForeignKey(d => d.WasherRequestId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__MatchedRe__Washe__787EE5A0");
+                    .HasConstraintName("FK__MatchedRe__Washe__1BC821DD");
             });
 
             modelBuilder.Entity<Transaction>(entity =>
@@ -154,12 +154,12 @@ namespace WasherDAL.Models
                 entity.HasOne(d => d.Request)
                     .WithMany(p => p.Transaction)
                     .HasForeignKey(d => d.RequestId)
-                    .HasConstraintName("FK__Transacti__Reque__0A9D95DB");
+                    .HasConstraintName("FK__Transacti__Reque__2739D489");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Transaction)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Transacti__UserI__06CD04F7");
+                    .HasConstraintName("FK__Transacti__UserI__236943A5");
             });
 
             modelBuilder.Entity<Users>(entity =>

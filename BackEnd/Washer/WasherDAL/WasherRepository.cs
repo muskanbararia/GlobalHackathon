@@ -10,13 +10,11 @@ namespace WasherDAL
 {
     public class WasherRepository
     {
-        washerContext context;
         private readonly WasherDBContext _context;
         SqlConnection conObj = new SqlConnection();
         SqlCommand cmdObj;
         public WasherRepository()
         {
-            context = new washerContext();
             conObj.ConnectionString = "Data Source=.\\SQLExpress;Initial Catalog=WasherDB; Integrated Security=SSPI";
             cmdObj = new SqlCommand();
             _context = new WasherDBContext();
@@ -39,7 +37,7 @@ namespace WasherDAL
                 SqlParameter prmUserId = new SqlParameter("@UserId", System.Data.SqlDbType.VarChar,20);
                 prmUserId.Direction = System.Data.ParameterDirection.Output;
 
-                context.Database.ExecuteSqlCommand("EXEC dbo.usp_SignUp @UserName,@UserEmail,@UserMobile,@lat,@lon,@UserPassword,@Washing, @UserId OUT", new[] { prmUserName, prmUserEmail,prmUserMob,prmLat,prmLon,prmUserPass,prmWash, prmUserId });
+                _context.Database.ExecuteSqlCommand("EXEC dbo.usp_SignUp @UserName,@UserEmail,@UserMobile,@lat,@lon,@UserPassword,@Washing, @UserId OUT", new[] { prmUserName, prmUserEmail,prmUserMob,prmLat,prmLon,prmUserPass,prmWash, prmUserId });
 
                 result = Convert.ToString(prmUserId.Value);
             }
@@ -80,7 +78,7 @@ namespace WasherDAL
             userId = userId.Replace(" ", string.Empty);
             try
             {
-                var user = context.Users.Where(u => u.Userid == userId).FirstOrDefault();
+                var user = _context.Users.Where(u => u.Userid == userId).FirstOrDefault();
                 return user;
             }
             catch(Exception ex)
@@ -227,15 +225,13 @@ namespace WasherDAL
                 matchedRequest = (from mr in _context.MatchedRequest
                                    where mr.MatchedRequestId == matchedRequestId
                                    select mr).FirstOrDefault();
-                if (matchedRequest != null)
+                if (matchedRequest != null && matchedRequest.Status!="Rejected")
                 {
                     matchedRequest.Status = newStatus;
-                    //Add to Accepted Request
-                    AcceptedRequest acceptedRequest = new AcceptedRequest();
-                    acceptedRequest.OwnerId = matchedRequest.OwnerId;
-
                     _context.SaveChanges();
-                    status = true;
+                    //Add to Accepted Request
+                    if (newStatus == "Accepted")
+                        status = AcceptedRequest(matchedRequest);                    
                 }
             }
             catch (Exception e)
@@ -245,8 +241,77 @@ namespace WasherDAL
             return status;
         }
 
-        //Start wash cycle -> will call UpdateWashStatus automatically after 2 hours
+        //Create accepted request
+        public bool AcceptedRequest(MatchedRequest matchedRequest)
+        {
+            bool status = false;
+            try
+            {
+                AcceptedRequest acceptedRequest = new AcceptedRequest();
+                acceptedRequest.OwnerId = matchedRequest.OwnerId;
+                acceptedRequest.Status = "Incomplete";
+                acceptedRequest.OwnerRequestId = matchedRequest.OwnerRequestId;
+                acceptedRequest.WasherId = matchedRequest.WasherId;
+                acceptedRequest.WasherRequestId = matchedRequest.WasherRequestId;
+                acceptedRequest.TimeStamp = DateTime.Now;
+                _context.AcceptedRequest.Add(acceptedRequest);
+                _context.SaveChanges();
+                status = UpdateCapacity(acceptedRequest);                
+            }
+            catch (Exception ex)
+            {
+                status = false;
+            }
+            return status;
+        }
 
+        //Update capacity
+        public bool UpdateCapacity(AcceptedRequest acceptedRequest)
+        {
+            bool status = false;
+            try
+            {
+                LaundryRequest ownerRequest = (from lr in _context.LaundryRequest
+                                               where lr.UserId == acceptedRequest.OwnerId
+                                               select lr).FirstOrDefault();
+                LaundryRequest washerRequest = (from lr in _context.LaundryRequest
+                                                where lr.UserId == acceptedRequest.WasherId
+                                                select lr).FirstOrDefault();
+                int newCapacity = 0;
+                if (ownerRequest.Weight >= washerRequest.Weight)
+                {
+                    newCapacity = ownerRequest.Weight - washerRequest.Weight;
+                    ownerRequest.Weight = newCapacity;
+                    if (newCapacity == 0)
+                    {
+                        acceptedRequest.Status = "Active";
+                        status = StartWashCycle(acceptedRequest.AcceptedRequestId);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                status = false;
+            }
+            return status;
+        }
+
+        //Start wash cycle -> will call UpdateWashStatus automatically after 2 hours
+        public bool StartWashCycle(int acceptedRequestId)
+        {
+            bool status = false;
+            try
+            {
+                //Call after two hours
+               status = UpdateWashStatus(acceptedRequestId);
+            }
+            catch (Exception ex)
+            {
+                status = false;
+            }
+            return status;
+        }
+    
         //Update wash status
         public bool UpdateWashStatus(int acceptedRequestId)
         {
