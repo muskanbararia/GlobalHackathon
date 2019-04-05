@@ -1,0 +1,91 @@
+<app-user-nav ></app-user-nav>
+
+<div class="container" style="margin-top:30px">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header" style="text-align:center">Hello, {{userName}}!</div>
+                
+                <div class="card-body">
+                    <div *ngIf="!error">
+                    <div class="container">
+                    <div class="row">
+                        <div class="col-xs-4"></div>
+                        <div class="col-xs-4"><img class="card-img-top" src="../../assets/user3.png" alt="Card image"></div>
+                        <div class="col-xs-4"></div>
+                    </div>
+                    
+                    <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Email: {{userEmail}}</li>
+                            <li class="list-group-item">Mobile: {{mobile}}</li>
+                            <li class="list-group-item">Own a washing Machine: <span *ngIf="wash">Yes</span><span *ngIf="!wash">No</span></li>
+                            <li class="list-group-item">Balance =20<img src="../../assets/pic1.gif" style="height:50px;width:auto;"></li>
+                            <li class="list-group-item"><a routerLink="/editprofile" class="btn btn-primary">Edit Profile</a></li>
+                          </ul>
+    
+                    </div>
+                    <div *ngIf="error">
+                      <p>Our Server is down!!</p>
+                    </div>
+
+
+                </div>
+                </div> 
+              </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-header" style="text-align:center">Doing the laundary today?</div>
+                <div class="card-body">
+                    <p>Select all that applies to your laundry:</p>
+                    <form>
+                        <ul class="list-group">
+                                <li class="list-group-item">
+                                        <div class="form-check">
+                                                <label class="form-check-label">
+                                                  <input type="checkbox" class="form-check-input" value="">I am going to wash whites only.
+                                                </label>
+                                              </div>
+                                      </li>
+                                <li class="list-group-item"><div class="form-check">
+                                        <label class="form-check-label">
+                                          <input type="checkbox" class="form-check-input" value="">I am going to wash denims and trousers only.
+                                        </label>
+                                      </div></li>
+                                <li class="list-group-item"><div class="form-check">
+                                        <label class="form-check-label">
+                                          <input type="checkbox" class="form-check-input" value="">I am not going to wash the undergarments.
+                                        </label>
+                                      </div></li>
+                                      <li class="list-group-item">
+                                            <div class="input-group mb-3">
+                                                    <input type="number" class="form-control" placeholder="Weight of your laundry">
+                                                    <div class="input-group-append">
+                                                      <span class="input-group-text">Kg.</span>
+                                                    </div>
+                                                  </div></li>
+                        </ul>
+                    </form>
+                </div> 
+                <div class="card-footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-4">
+                                    <a href="#" class="btn btn-primary">Look for machine</a>
+                            </div>
+                            <div class="col-md-4">
+                                    <br>
+                            </div>
+                            <div class="col-md-4" *ngIf="wash">
+                                    <a href="#" class="btn btn-primary">Look for laundry</a>
+                            </div>
+                        </div>
+                    </div>
+                        
+                </div>
+              </div>
+        </div>
+        
+    </div>
+</div>
+<app-footer></app-footer>
