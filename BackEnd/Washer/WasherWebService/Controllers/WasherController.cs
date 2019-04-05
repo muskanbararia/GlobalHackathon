@@ -110,6 +110,26 @@ namespace WasherWebService.Controllers
             return Json(matchedRequests);
         }
 
+        //User information from laundry request
+        [HttpGet]
+        public JsonResult GetUserLaundryInfo(int requestId)
+        {
+            Models.LaundryRequest laundryRequest=new Models.LaundryRequest();
+            try
+            {
+                LaundryRequest laundries = rep.GetUserLaundryInfo(requestId);
+                if (laundries != null)
+                {
+                    laundryRequest = _mapper.Map<Models.LaundryRequest>(laundries);
+                }
+            }
+            catch (Exception ex)
+            {
+                laundryRequest = null;
+            }
+            return Json(laundryRequest);
+        }
+
         //Send request
         [HttpPut]
         public JsonResult SendRequest(Models.MatchedRequest matchedRequest)

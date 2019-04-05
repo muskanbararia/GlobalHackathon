@@ -207,6 +207,7 @@ namespace WasherDAL
             return matchedRequests;
         }
 
+        //User information from laundry request
         public LaundryRequest GetUserLaundryInfo(int requestId)
         {
             LaundryRequest laundryRequest;
@@ -478,5 +479,7 @@ namespace WasherDAL
             }
             return laundrocash;
         }
+
+        //Fetch status from laundry request
     }
 }
