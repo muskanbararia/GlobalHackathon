@@ -9,3 +9,14 @@ C:\Users\acer\Source\Repos\Washer\WasherDAL\obj\Debug\netcoreapp2.1\WasherDAL.dl
 C:\Users\acer\Source\Repos\Washer\WasherDAL\obj\Debug\netcoreapp2.1\WasherDAL.pdb
 C:\Users\acer\Source\Repos\Washer\WasherDAL\bin\Debug\netcoreapp2.1\WasherDAL.runtimeconfig.json
 C:\Users\acer\Source\Repos\Washer\WasherDAL\bin\Debug\netcoreapp2.1\WasherDAL.runtimeconfig.dev.json
+D:\Hackathon\GlobalHackathon\BackEnd\Washer\WasherDAL\obj\Debug\netcoreapp2.1\WasherDAL.csprojAssemblyReference.cache
+D:\Hackathon\GlobalHackathon\BackEnd\Washer\WasherDAL\obj\Debug\netcoreapp2.1\WasherDAL.csproj.CoreCompileInputs.cache
+D:\Hackathon\GlobalHackathon\BackEnd\Washer\WasherDAL\obj\Debug\netcoreapp2.1\WasherDAL.AssemblyInfoInputs.cache
+D:\Hackathon\GlobalHackathon\BackEnd\Washer\WasherDAL\obj\Debug\netcoreapp2.1\WasherDAL.AssemblyInfo.cs
+D:\Hackathon\GlobalHackathon\BackEnd\Washer\WasherDAL\obj\Debug\netcoreapp2.1\WasherDAL.dll
+D:\Hackathon\GlobalHackathon\BackEnd\Washer\WasherDAL\obj\Debug\netcoreapp2.1\WasherDAL.pdb
+D:\Hackathon\GlobalHackathon\BackEnd\Washer\WasherDAL\bin\Debug\netcoreapp2.1\WasherDAL.deps.json
+D:\Hackathon\GlobalHackathon\BackEnd\Washer\WasherDAL\bin\Debug\netcoreapp2.1\WasherDAL.runtimeconfig.json
+D:\Hackathon\GlobalHackathon\BackEnd\Washer\WasherDAL\bin\Debug\netcoreapp2.1\WasherDAL.runtimeconfig.dev.json
+D:\Hackathon\GlobalHackathon\BackEnd\Washer\WasherDAL\bin\Debug\netcoreapp2.1\WasherDAL.dll
+D:\Hackathon\GlobalHackathon\BackEnd\Washer\WasherDAL\bin\Debug\netcoreapp2.1\WasherDAL.pdb
