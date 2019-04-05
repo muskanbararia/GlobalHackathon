@@ -29,6 +29,7 @@ namespace WasherDAL
             return sCoord.GetDistanceTo(eCoord);
         }
 
+        //New User Registration
         public string UserSignUp(string userName, string userEmail, string userPassword,string userMobile, string lat, string lon,bool washing)
         {
             
@@ -58,6 +59,7 @@ namespace WasherDAL
             return result;
         }
 
+        //User Login
         public string UserLogin(string userEmail, string userPassword)
         {
 
@@ -82,6 +84,7 @@ namespace WasherDAL
             return returnValue;
         }
 
+        //Fetch User information
         public Users GetUserInfo(string userId)
         {
             userId = userId.Replace(" ", string.Empty);
@@ -96,6 +99,7 @@ namespace WasherDAL
             }
         }
 
+        //Edit Profile
         public string UpdateUserInfo(Users user)
         {
             return null;
@@ -481,5 +485,37 @@ namespace WasherDAL
         }
 
         //Fetch status from laundry request
+        public string FetchLaundryStatus(string userId)
+        {
+            string status = "";
+            try
+            {
+                status = (from s in _context.LaundryRequest
+                          where s.UserId==userId
+                          select s.Status).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                status = "";
+            }
+            return status;
+        }
+
+        //Fetch status from matched request
+        public string FetchMatchedStatus(int matchedRequestId)
+        {
+            string status = "";
+            try
+            {
+                status = (from s in _context.MatchedRequest
+                          where s.MatchedRequestId == matchedRequestId
+                          select s.Status).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                status = "";
+            }
+            return status;
+        }
     }
 }

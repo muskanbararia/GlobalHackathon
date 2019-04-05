@@ -22,6 +22,7 @@ namespace WasherWebService.Controllers
             _mapper = mapper;
         }
 
+        //New User registration
         [HttpPost]
         public JsonResult SignUp([FromBody] Models.User user)
         {
@@ -38,6 +39,7 @@ namespace WasherWebService.Controllers
             return Json(status);
         }
 
+        //User Login
         [HttpGet]
         public JsonResult Login(string email, string password)
         {
@@ -54,6 +56,7 @@ namespace WasherWebService.Controllers
             return Json(status);
         }
 
+        //Fetches uset information
         [HttpGet]
         public JsonResult UserInfo(string userId)
         {
@@ -70,8 +73,8 @@ namespace WasherWebService.Controllers
             return Json(u);
         }
 
-        [HttpPost]
         //Raising a new request
+        [HttpPost]
         public JsonResult RaiseRequest(LaundryRequest laundryRequest)
         {
             int status = 0;
@@ -86,8 +89,8 @@ namespace WasherWebService.Controllers
             return Json(status);
         }
 
-        [HttpGet]
         //Lists all the matched request for given user id
+        [HttpGet]
         public JsonResult ViewMatchedRequests(string userId)
         {
             List<Models.MatchedRequest> matchedRequests = new List<Models.MatchedRequest>();
@@ -170,8 +173,8 @@ namespace WasherWebService.Controllers
             return Json(matchedRequests);
         }
 
-        [HttpPut]
         //Accepting request
+        [HttpPut]
         public JsonResult AcceptOrRejectRequest(int matchedRequestId, string newStatus)
         {
             bool status = false;
@@ -233,7 +236,37 @@ namespace WasherWebService.Controllers
             }
             return Json(result);
         }
-      
-      
+
+        //Fetch status from laundry request
+        [HttpGet]
+        public JsonResult FetchLaundryStatus(string userId)
+        {
+            string status = "";
+            try
+            {
+                status = rep.FetchLaundryStatus(userId);
+            }
+            catch (Exception e)
+            {
+                status = "";
+            }
+            return Json(status);
+        }
+
+        //Fetch status from matched request
+        [HttpGet]
+        public JsonResult FetchMatchedStatus(int matchedRequestId)
+        {
+            string status = "";
+            try
+            {
+                status = rep.FetchMatchedStatus(matchedRequestId);
+            }
+            catch (Exception e)
+            {
+                status = "";
+            }
+            return Json(status);
+        }
     }
 }
