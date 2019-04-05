@@ -44,7 +44,7 @@ CREATE TABLE [dbo].[AcceptedRequest] (
     [OwnerRequestId] INT ,
 	[WasherRequestId] INT ,
 	[TimeStamp] DATETIME NOT NULL,
-	[Status] VARCHAR(20) NOT NULL CHECK([Status] IN ('Complete','Incomplete')),
+	[Status] VARCHAR(20) NOT NULL CHECK([Status] IN ('Complete','Incomplete','Active')),
 	CONSTRAINT fk_RequestsAccepted 
 		FOREIGN KEY (OwnerId,WasherId,OwnerRequestId,WasherRequestId) 
 		REFERENCES MatchedRequest(OwnerId,WasherId,OwnerRequestId,WasherRequestId)
