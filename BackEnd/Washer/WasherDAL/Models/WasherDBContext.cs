@@ -77,7 +77,7 @@ namespace WasherDAL.Models
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.LaundryRequest)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__LaundryRe__UserI__0E6E26BF");
+                    .HasConstraintName("FK__LaundryRe__UserI__276EDEB3");
             });
 
             modelBuilder.Entity<MatchedRequest>(entity =>
@@ -86,7 +86,7 @@ namespace WasherDAL.Models
                     .HasName("uq_RequestsMatched")
                     .IsUnique();
 
-                entity.Property(e => e.Distance).HasColumnType("numeric(5, 2)");
+                entity.Property(e => e.Distance).HasColumnType("numeric(25, 2)");
 
                 entity.Property(e => e.OwnerId)
                     .IsRequired()
@@ -94,6 +94,10 @@ namespace WasherDAL.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.OwnerRequestId).IsRequired();
+
+                entity.Property(e => e.RequestSentBy)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Status)
                     .IsRequired()
@@ -111,25 +115,25 @@ namespace WasherDAL.Models
                     .WithMany(p => p.MatchedRequestOwner)
                     .HasForeignKey(d => d.OwnerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__MatchedRe__Owner__18EBB532");
+                    .HasConstraintName("FK__MatchedRe__Owner__31EC6D26");
 
                 entity.HasOne(d => d.OwnerRequest)
                     .WithMany(p => p.MatchedRequestOwnerRequest)
                     .HasForeignKey(d => d.OwnerRequestId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__MatchedRe__Owner__1AD3FDA4");
+                    .HasConstraintName("FK__MatchedRe__Owner__33D4B598");
 
                 entity.HasOne(d => d.Washer)
                     .WithMany(p => p.MatchedRequestWasher)
                     .HasForeignKey(d => d.WasherId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__MatchedRe__Washe__19DFD96B");
+                    .HasConstraintName("FK__MatchedRe__Washe__32E0915F");
 
                 entity.HasOne(d => d.WasherRequest)
                     .WithMany(p => p.MatchedRequestWasherRequest)
                     .HasForeignKey(d => d.WasherRequestId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__MatchedRe__Washe__1BC821DD");
+                    .HasConstraintName("FK__MatchedRe__Washe__34C8D9D1");
             });
 
             modelBuilder.Entity<Transaction>(entity =>
@@ -154,12 +158,12 @@ namespace WasherDAL.Models
                 entity.HasOne(d => d.Request)
                     .WithMany(p => p.Transaction)
                     .HasForeignKey(d => d.RequestId)
-                    .HasConstraintName("FK__Transacti__Reque__2739D489");
+                    .HasConstraintName("FK__Transacti__Reque__403A8C7D");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Transaction)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Transacti__UserI__236943A5");
+                    .HasConstraintName("FK__Transacti__UserI__3C69FB99");
             });
 
             modelBuilder.Entity<Users>(entity =>

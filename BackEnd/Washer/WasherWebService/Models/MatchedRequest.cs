@@ -14,5 +14,6 @@ namespace WasherWebService.Models
         public int WasherRequestId { get; set; }
         public string Status { get; set; }
         public decimal Distance { get; set; }
+        public string RequestSentBy { get; set; }
     }
 }

@@ -141,7 +141,8 @@ namespace WasherWebService.Controllers
             try
             {
                 status = rep.SendRequest(matchedRequest.OwnerId, matchedRequest.WasherId,
-                    matchedRequest.OwnerRequestId, matchedRequest.WasherRequestId);
+                    matchedRequest.OwnerRequestId, matchedRequest.WasherRequestId,
+                    matchedRequest.RequestSentBy);
             }
             catch (Exception ex)
             {

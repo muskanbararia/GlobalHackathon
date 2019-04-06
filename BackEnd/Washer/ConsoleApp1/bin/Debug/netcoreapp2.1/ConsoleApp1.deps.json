@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "051b7f8f5eb7d1094af74a9c3676f2a1dd55d237"
+    "signature": "e3c3f320cf28ed8c55f19c09e26aef7dc751aed0"
   },
   "compilationOptions": {},
   "targets": {
@@ -12,6 +12,14 @@
         },
         "runtime": {
           "ConsoleApp1.dll": {}
+        }
+      },
+      "GeoCoordinate.NetCore/1.0.0.1": {
+        "runtime": {
+          "lib/netstandard1.6/GeoCoordinate.NetCore.dll": {
+            "assemblyVersion": "1.0.0.1",
+            "fileVersion": "1.0.0.1"
+          }
         }
       },
       "Microsoft.EntityFrameworkCore/2.1.1": {
@@ -501,6 +509,7 @@
       },
       "WasherDAL/1.0.0": {
         "dependencies": {
+          "GeoCoordinate.NetCore": "1.0.0.1",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.1.1"
         },
         "runtime": {
@@ -514,6 +523,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "GeoCoordinate.NetCore/1.0.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VrR5MLkh0u2qka79JcQ/GUrgHwGidayCA7nKy2430qYX/JHdrHLgwp1MuBTSsygWs0s2V6GQ0Hp8HUMatHiWFw==",
+      "path": "geocoordinate.netcore/1.0.0.1",
+      "hashPath": "geocoordinate.netcore.1.0.0.1.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore/2.1.1": {
       "type": "package",

@@ -163,7 +163,7 @@ namespace WasherDAL
                                 matchedRequest.OwnerId = laundryRequest.UserId;
                                 matchedRequest.WasherId = request.UserId;
                                 matchedRequest.OwnerRequestId = laundryRequest.RequestId;
-                                matchedRequest.WasherRequestId = request.RequestId;
+                                matchedRequest.WasherRequestId = request.RequestId;                                
                             }
                             else
                             {
@@ -172,7 +172,6 @@ namespace WasherDAL
                                 matchedRequest.OwnerRequestId = request.RequestId;
                                 matchedRequest.WasherRequestId = laundryRequest.RequestId;
                             }
-                            
                             matchedRequest.Status = "Accepted";
                             Users owner = (from lr in _context.Users
                                                            where lr.Userid == matchedRequest.OwnerId
@@ -202,7 +201,7 @@ namespace WasherDAL
             try
             {
                 SqlParameter user = new SqlParameter("@UserId", userId);
-                matchedRequests = _context.MatchedRequest.FromSql("Select * from ufn_ViewMatchedRequests(@UserId)", user).ToList();               
+                matchedRequests = _context.MatchedRequest.FromSql("Select * from ufn_ViewMatchedRequests(@UserId)", user).Where(x=>x.Status!="Pending").ToList();               
             }
             catch (Exception e)
             {
@@ -230,7 +229,7 @@ namespace WasherDAL
 
         //Send request
         public bool SendRequest(string senderUserId, string receiverUserId, 
-            int senderRequestId, int receiverRequestId)
+            int senderRequestId, int receiverRequestId, string userId)
         {
             bool status = false;
             try
@@ -249,6 +248,7 @@ namespace WasherDAL
                 if(matchedRequest != null)
                 {
                     matchedRequest.Status = "Pending";
+                    matchedRequest.RequestSentBy = userId;
                     _context.SaveChanges();
                     status = true;
                 }
@@ -269,7 +269,7 @@ namespace WasherDAL
                 matchedRequests = (from mr in _context.MatchedRequest
                                    where (mr.OwnerId == userId
                                    || mr.WasherId == userId) && 
-                                   mr.Status.ToLower()=="pending"
+                                   mr.Status.ToLower()=="pending" && mr.RequestSentBy!=userId
                                    select mr).ToList();
             }
             catch (Exception ex)

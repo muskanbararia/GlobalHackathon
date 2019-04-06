@@ -124,6 +124,7 @@ CREATE TABLE MatchedRequest
 	[Status] VARCHAR(20) NOT NULL CONSTRAINT chk_MatchedRequest_Status
 				CHECK ([Status] IN ('Inactive','Pending','Accepted','Rejected')),
 	Distance NUMERIC(25,2) NOT NULL,
+	RequestSentBy VARCHAR(20),
 	CONSTRAINT uq_RequestsMatched UNIQUE(OwnerId,WasherId,OwnerRequestId,WasherRequestId)
 )
 GO

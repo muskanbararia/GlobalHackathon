@@ -17,6 +17,7 @@ namespace WasherDAL.Models
         public int? WasherRequestId { get; set; }
         public string Status { get; set; }
         public decimal Distance { get; set; }
+        public string RequestSentBy { get; set; }
 
         public Users Owner { get; set; }
         public LaundryRequest OwnerRequest { get; set; }
